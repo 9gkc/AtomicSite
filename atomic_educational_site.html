@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mr. Atomic</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+
+        /* Reset and base */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #9b59b6 0%, #2980b9 100%);
+            margin: 0;
+            color: #222;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #34495e;
+            color: #ecf0f1;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+            user-select: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            background: #fff;
+            margin: 1.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Navigation */
+        nav {
+            width: 300px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav h2 {
+            font-weight: 900;
+            font-size: 1.5rem;
+            padding: 1.4rem 1.6rem;
+            margin: 0;
+            border-bottom: 2px solid #8e44ad;
+            letter-spacing: 1.1px;
+            user-select: none;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            border-bottom: 1px solid #34495e;
+        }
+
+        /* تعديل ألوان أزرار الفصول */
+        nav li>button.folder-btn {
+            all: unset;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 1rem 1.4rem;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.15rem;
+            text-align: right;
+            border-left: 6px solid transparent;
+            transition: background-color 0.4s, border-color 0.4s, color 0.4s;
+            /* لون النص للفصول */
+            color: #f39c12;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        nav li>button.folder-btn:hover,
+        nav li>button.folder-btn[aria-expanded="true"] {
+            background-color: #34495e;
+            color: #f1c40f;
+            border-left-color: #f1c40f;
+        }
+
+        nav li>button.folder-btn .arrow {
+            font-weight: 900;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: #f39c12;
+            user-select: none;
+        }
+
+        nav li>button.folder-btn[aria-expanded="true"] .arrow {
+            transform: rotate(90deg);
+        }
+
+        nav ul.submenu {
+            max-height: 0;
+            overflow: hidden;
+            background: #34495e;
+            transition: max-height 0.4s ease;
+        }
+
+        nav ul.submenu.open {
+            max-height: 500px;
+            /* enough to show all items */
+        }
+
+        nav ul.submenu li button.material-btn {
+            all: unset;
+            display: block;
+            width: 100%;
+            padding: 0.75rem 2.4rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #bdc3c7;
+            text-align: right;
+            border-left: 6px solid transparent;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        nav ul.submenu li button.material-btn:hover,
+        nav ul.submenu li button.material-btn.active {
+            background-color: #4a6a8c;
+            color: #f1c40f;
+            border-left-color: #f1c40f;
+            font-weight: 700;
+        }
+
+        /* Content */
+        section.content {
+            flex: 1;
+            padding: 2rem 3rem;
+            overflow-y: auto;
+            font-size: 1.125rem;
+            color: #34495e;
+        }
+
+        section.content h2 {
+            margin-top: 0;
+            font-weight: 900;
+            font-size: 2rem;
+            border-bottom: 4px solid #9b59b6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            user-select: none;
+        }
+
+        section.content p {
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+
+        section.content ul.files-list {
+            list-style-type: disc;
+            padding-inline-start: 1.6rem;
+            margin-bottom: 1.6rem;
+        }
+
+        section.content ul.files-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        section.content ul.files-list li a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        section.content ul.files-list li a:hover,
+        section.content ul.files-list li a:focus {
+            color: #9b59b6;
+            outline: none;
+        }
+
+        section.content h3 {
+            margin-top: 1.5rem;
+            font-weight: 700;
+            color: #8e44ad;
+        }
+
+        section.content ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        section.content .images {
+            margin-top: 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        section.content .images img {
+            max-width: 200px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        section.content .images img:hover,
+        section.content .images img:focus {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            outline: none;
+        }
+
+        /* Scrollbar styling */
+        nav::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        nav::-webkit-scrollbar-thumb {
+            background-color: #9b59b6;
+            border-radius: 20px;
+        }
+
+        nav::-webkit-scrollbar-track {
+            background: #2c3e50;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1rem 1.5rem;
+            font-size: 0.95rem;
+            color: #ecf0f1;
+            background: #34495e;
+            user-select: none;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        /* Responsive */
+        @media(max-width: 850px) {
+            main {
+                flex-direction: column;
+                margin: 1rem;
+                border-radius: 12px;
+            }
+
+            nav {
+                width: 100%;
+                max-height: 240px;
+                border-radius: 12px 12px 0 0;
+            }
+
+            nav h2 {
+                font-size: 1.3rem;
+            }
+
+            nav ul.submenu.open {
+                max-height: 500px;
+            }
+
+            section.content {
+                padding: 1.5rem 1.8rem;
+                max-height: calc(100vh - 300px);
+                overflow-y: auto;
+                font-size: 1rem;
+            }
+
+            section.content h2 {
+                font-size: 1.8rem;
+            }
+
+            section.content .images img {
+                max-width: 40vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>Mr. Atomic</header>
+    <main>
+        <nav aria-label="قائمة المواد الدراسية">
+            <h2>المراحل الدراسية</h2>
+            <ul>
+                <li>
+                    <button type="button" class="folder-btn" aria-expanded="false" aria-controls="semester1-submenu"
+                        aria-label="الفصل الدراسي الأول إظهار / إخفاء المواد">
+                        الفصل الدراسي الأول
+                        <span class="arrow">&#9656;</span>
+                    </button>
+                    <ul class="submenu" id="semester1-submenu" role="list">
+                        <li><button type="button" class="material-btn" data-material="material-1"
+                                role="listitem">الهياكل المتقطعة</button></li>
+                        <li><button type="button" class="material-btn" data-material="material-2"
+                                role="listitem">أساسيات البرمجة</button></li>
+                        <li><button type="button" class="material-btn" data-material="material-3" role="listitem">أمنية
+                                البيانات</button></li>
+                        <li><button type="button" class="material-btn" data-material="material-4" role="listitem">تنظيم
+                                الحاسوب</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button type="button" class="folder-btn" aria-expanded="false" aria-controls="semester2-submenu"
+                        aria-label="الفصل الدراسي الثاني إظهار / إخفاء المواد">
+                        الفصل الدراسي الثاني
+                        <span class="arrow">&#9656;</span>
+                    </button>
+                    <ul class="submenu" id="semester2-submenu" role="list">
+                        <li><button type="button" class="material-btn" data-material="material-5"
+                                role="listitem">التصميم المنطقي</button></li>
+                        <li><button type="button" class="material-btn" data-material="material-6"
+                                role="listitem">البرمجة المتقدمة</button></li>
+                        <li><button type="button" class="material-btn" data-material="material-7"
+                                role="listitem">الاحتمالية والاحصاء</button></li>
+                        <li><button type="button" class="material-btn" data-material="material-8"
+                                role="listitem">الترميز ونظرية المعلومات</button></li>
+                        <li><button type="button" class="material-btn" data-material="material-9" role="listitem">مبادئ
+                                الامن السيبراني</button></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <section class="content" tabindex="0" aria-live="polite" aria-atomic="true">
+            <h2>مرحباً بكم في موقع Mr. Atomic</h2>
+            <p>اختر أحد المواد من القائمة لمشاهدة تفاصيل المادة، الملفات، النصائح، والصور.</p>
+        </section>
+    </main>
+    <footer>جميع الحقوق محفوظة للطالب علي الكرار © 2024 Mr. Atomic</footer>
+
+    <script>
+        const materialsData = {
+            'material-1': {
+                title: 'الهياكل المتقطعة',
+                files: [
+                    { name: 'ملزمة الهياكل المتقطعة كاملة', url: 'files/الهياكل كاملة.pdf' },
+                    { name: 'تقرير التشفيير الرياضي بأستخدام RSA', url: 'files/تقرير هياكل متقطعة.pdf' }
+                ],
+                tips: [
+                    'راجع الرسوم البيانية بعناية لفهم العلاقة بين العقد.',
+                    'مارس حل المشكلات برسم الهياكل المختلفة بنفسك.'
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=800&q=60'
+                ]
+            },
+            'material-2': {
+                title: 'أساسيات البرمجة',
+                files: [
+                    { name: 'تقرير عن قياس سرعة الأنترنت بأستخدام كود بايثون', url: 'files/InternetSpeed.pdf' },
+                    { name: 'تمارين برمجة أساسية', url: '#' }
+                ],
+                tips: [
+                    'ابدأ بفهم المفاهيم الأساسية مثل المتغيرات والحلقات.',
+                    'استخدم محرر أكواد يدعم التظليل اللوني لتسهيل القراءة.'
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=60'
+                ]
+            },
+            'material-3': {
+                title: 'أمنية البيانات',
+                files: [
+                    { name: 'تقرير عن خصوصية المستخدم في انترنت الاشياء (IoT)', url: 'files/تقرير امنية.pdf' },
+                    { name: 'تقنيات التشفير', url: '#' }
+                ],
+                tips: [
+                    'حافظ على كلمات المرور قوية وغير متكررة.',
+                    'استخدم تقنيات التشفير لنقل وحفظ المعلومات.'
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=60'
+                ]
+            },
+            'material-4': {
+                title: 'تنظيم الحاسوب',
+                files: [
+                    { name: 'مقدمة لتنظيم الحاسوب', url: '#' },
+                    { name: 'مكونات الحاسوب الأساسية', url: '#' }
+                ],
+                tips: [
+                    'تعرف على مكونات الحاسوب وكيفية تفاعلها مع بعضها.',
+                    'فهم نظام التشغيل ودوره في إدارة الموارد.'
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=800&q=60'
+                ]
+            },
+            'material-5': {
+                title: 'التصميم المنطقي',
+                files: [
+                    { name: 'مبادئ التصميم المنطقي', url: '#' },
+                    { name: 'تمارين التصميم', url: '#' }
+                ],
+                tips: [
+                    'ابدأ من فهم الدوائر المنطقية الأساسية.',
+                    'مارس تصميم الدوائر واستعمال البوابات المنطقية.'
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=800&q=60'
+                ]
+            },
+            'material-6': {
+                title: 'البرمجة المتقدمة',
+                files: [
+                    { name: 'تقرير عن نظام محاكاة البنوك بأستخدام بايثون', url: 'files/نظام محاكاة البنوك.pdf' },
+                    { name: 'دروس وأمثلة', url: '#' }
+                ],
+                tips: [
+                    'تعرف على البرمجة الكائنية والأنماط المختلفة.',
+                    'استخدم أدوات التصحيح لتحليل الكود.'
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=60'
+                ]
+            },
+            'material-7': {
+                title: 'الاحتمالية والاحصاء',
+                files: [
+                    { name: 'مبادئ الاحتمالية', url: '#' },
+                    { name: 'تمارين الاحصاء', url: '#' }
+                ],
+                tips: [
+                    'احرص على فهم المفاهيم الأساسية كالوسط، الوسيط، والانحراف المعياري.',
+                    'استخدم الرسوم البيانية لتوضيح البيانات.'
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1486308510493-cb551e47550b?auto=format&fit=crop&w=800&q=60'
+                ]
+            },
+            'material-8': {
+                title: 'الترميز ونظرية المعلومات',
+                files: [
+                    { name: 'تقرير التشفيير - خوارزمية RSA في مادة الترميز', url: 'files/تقرير الترميز.pdf' },
+                    { name: 'مبادئ نظرية المعلومات', url: '#' }
+                ],
+                tips: [
+                    'افهم طرق التمثيل المختلفة للبيانات.',
+                    'اطلع على تطبيقات الترميز في الحياة العملية.'
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=800&q=60'
+                ]
+            },
+            'material-9': {
+                title: 'مبادئ الامن السيبراني',
+                files: [
+                    { name: 'تقرير تهديدات الامن السيبراني وطرق الحماية', url: 'files/تقرير المبادئ.pdf' },
+                    { name: 'أفضل الممارسات', url: '#' }
+                ],
+                tips: [
+                    'تعلم طرق الحماية من الهجمات السيبرانية الشائعة.',
+                    'حافظ دائماً على تحديث البرمجيات والأنظمة.'
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=60'
+                ]
+            }
+        };
+
+        // إدارة فتح وغلق القوائم الفرعية مع تأثير انسيابي
+        const folderButtons = document.querySelectorAll('.folder-btn');
+        folderButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const expanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', !expanded);
+
+                const submenu = document.getElementById(btn.getAttribute('aria-controls'));
+                if (!submenu) return;
+
+                if (!expanded) {
+                    submenu.classList.add('open');
+                } else {
+                    submenu.classList.remove('open');
+                }
+            });
+        });
+
+        // عرض المادة المختارة مع تحديث المحتوى
+        const materialButtons = document.querySelectorAll('.material-btn');
+        const contentSection = document.querySelector('section.content');
+
+        function clearActiveButtons() {
+            materialButtons.forEach(btn => btn.classList.remove('active'));
+        }
+
+        function renderMaterial(materialKey) {
+            const data = materialsData[materialKey];
+            if (!data) {
+                contentSection.innerHTML = '<h2>المادة غير موجودة</h2><p>عذراً، لم يتم العثور على بيانات لهذه المادة.</p>';
+                return;
+            }
+            clearActiveButtons();
+            const activeBtn = document.querySelector(`button[data-material="${materialKey}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            let html = `<h2>${data.title}</h2>`;
+
+            if (data.files && data.files.length > 0) {
+                html += `<h3>الملفات:</h3><ul class="files-list" aria-label="قائمة الملفات">`;
+                data.files.forEach(file => {
+                    html += `<li><a href="${file.url}" target="_blank" rel="noopener noreferrer" tabindex="0">${file.name}</a></li>`;
+                });
+                html += `</ul>`;
+            } else {
+                html += `<p><em>لا توجد ملفات متاحة حالياً.</em></p>`;
+            }
+
+            if (data.tips && data.tips.length > 0) {
+                html += `<h3>نصائح هامة:</h3><ul>`;
+                data.tips.forEach(tip => {
+                    html += `<li>${tip}</li>`;
+                });
+                html += `</ul>`;
+            }
+
+            if (data.images && data.images.length > 0) {
+                html += `<h3>صور توضيحية:</h3><div class="images" role="list">`;
+                data.images.forEach(src => {
+                    html += `<img src="${src}" alt="صورة توضيحية لمادة ${data.title}" role="listitem" loading="lazy" tabindex="0"/>`;
+                });
+                html += `</div>`;
+            }
+
+            contentSection.innerHTML = html;
+            contentSection.focus();
+        }
+
+        materialButtons.forEach(btn =>
+            btn.addEventListener('click', () => {
+                renderMaterial(btn.getAttribute('data-material'));
+            })
+        );
+    </script>
+</body>
+
+</html>
