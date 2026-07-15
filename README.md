@@ -4,6 +4,9 @@
   <img src="https://img.shields.io/badge/Category-Education-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Field-Cybersecurity-red?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Language-English%20%26%20Arabic-green?style=for-the-badge" />
+  <img src="https://img.shields.io/github/last-commit/9gkc/AtomicSite?style=for-the-badge&label=Last%20Update&color=58A6FF" alt="Last Update">
+  <img src="https://img.shields.io/github/stars/9gkc/AtomicSite?style=for-the-badge&color=58A6FF" alt="GitHub Stars">
+  <img src="https://img.shields.io/github/forks/9gkc/AtomicSite?style=for-the-badge&color=58A6FF" alt="GitHub Forks">
 </p>
 
 Mr. Atomic is a specialized educational web platform designed to explore and present core cybersecurity concepts. It serves as a repository for academic research, technical reports, and interactive learning materials focused on network security, encryption, and system simulation.
