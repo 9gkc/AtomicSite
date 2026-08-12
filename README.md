@@ -1,5 +1,7 @@
 # ⚛️ Mr. Atomic: Cybersecurity Educational Platform
 
+> **Live demo:** [Open AtomicSite in your browser](https://9gkc.github.io/AtomicSite/)
+
 <p align="center">
   <img src="https://img.shields.io/badge/Category-Education-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Field-Cybersecurity-red?style=for-the-badge" />
