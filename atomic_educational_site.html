@@ -500,46 +500,90 @@
             materialButtons.forEach(btn => btn.classList.remove('active'));
         }
 
+        function appendTextElement(parent, tagName, text, className) {
+            const element = document.createElement(tagName);
+            element.textContent = text;
+            if (className) element.className = className;
+            parent.appendChild(element);
+            return element;
+        }
+
+        function isAllowedImageSource(source) {
+            try {
+                const url = new URL(source, document.baseURI);
+                return url.protocol === 'https:' || url.protocol === 'http:';
+            } catch (_) {
+                return false;
+            }
+        }
+
         function renderMaterial(materialKey) {
             const data = materialsData[materialKey];
             if (!data) {
-                contentSection.innerHTML = '<h2>المادة غير موجودة</h2><p>عذراً، لم يتم العثور على بيانات لهذه المادة.</p>';
+                contentSection.replaceChildren();
+                appendTextElement(contentSection, 'h2', 'المادة غير موجودة');
+                appendTextElement(contentSection, 'p', 'عذراً، لم يتم العثور على بيانات لهذه المادة.');
                 return;
             }
+
             clearActiveButtons();
-            const activeBtn = document.querySelector(`button[data-material="${materialKey}"]`);
+            const activeBtn = Array.from(materialButtons).find(btn => btn.getAttribute('data-material') === materialKey);
             if (activeBtn) activeBtn.classList.add('active');
 
-            let html = `<h2>${data.title}</h2>`;
+            const fragment = document.createDocumentFragment();
+            appendTextElement(fragment, 'h2', data.title);
 
             if (data.files && data.files.length > 0) {
-                html += `<h3>الملفات:</h3><ul class="files-list" aria-label="قائمة الملفات">`;
+                appendTextElement(fragment, 'h3', 'الملفات:');
+                const filesList = document.createElement('ul');
+                filesList.className = 'files-list';
+                filesList.setAttribute('aria-label', 'قائمة الملفات');
                 data.files.forEach(file => {
-                    html += `<li><a href="${file.url}" target="_blank" rel="noopener noreferrer" tabindex="0">${file.name}</a></li>`;
+                    const item = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = file.url;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.tabIndex = 0;
+                    link.textContent = file.name;
+                    item.appendChild(link);
+                    filesList.appendChild(item);
                 });
-                html += `</ul>`;
+                fragment.appendChild(filesList);
             } else {
-                html += `<p><em>لا توجد ملفات متاحة حالياً.</em></p>`;
+                const emptyMessage = appendTextElement(fragment, 'p', 'لا توجد ملفات متاحة حالياً.');
+                const emphasis = document.createElement('em');
+                emphasis.textContent = emptyMessage.textContent;
+                emptyMessage.replaceChildren(emphasis);
             }
 
             if (data.tips && data.tips.length > 0) {
-                html += `<h3>نصائح هامة:</h3><ul>`;
-                data.tips.forEach(tip => {
-                    html += `<li>${tip}</li>`;
-                });
-                html += `</ul>`;
+                appendTextElement(fragment, 'h3', 'نصائح هامة:');
+                const tipsList = document.createElement('ul');
+                data.tips.forEach(tip => appendTextElement(tipsList, 'li', tip));
+                fragment.appendChild(tipsList);
             }
 
             if (data.images && data.images.length > 0) {
-                html += `<h3>صور توضيحية:</h3><div class="images" role="list">`;
-                data.images.forEach(src => {
-                    html += `<img src="${src}" alt="صورة توضيحية لمادة ${data.title}" role="listitem" loading="lazy" tabindex="0"/>`;
+                appendTextElement(fragment, 'h3', 'صور توضيحية:');
+                const images = document.createElement('div');
+                images.className = 'images';
+                images.setAttribute('role', 'list');
+                data.images.forEach(source => {
+                    if (!isAllowedImageSource(source)) return;
+                    const image = document.createElement('img');
+                    image.src = source;
+                    image.alt = `صورة توضيحية لمادة ${data.title}`;
+                    image.setAttribute('role', 'listitem');
+                    image.loading = 'lazy';
+                    image.tabIndex = 0;
+                    images.appendChild(image);
                 });
-                html += `</div>`;
+                if (images.childElementCount > 0) fragment.appendChild(images);
             }
 
-            contentSection.innerHTML = html;
-            contentSection.focus();
+            contentSection.replaceChildren(fragment);
+            contentSection.focus({ preventScroll: true });
         }
 
         materialButtons.forEach(btn =>
