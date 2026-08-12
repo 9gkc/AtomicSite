@@ -1,0 +1,13 @@
+{
+  "name": "Mr. Atomic Cybersecurity Platform",
+  "short_name": "Mr. Atomic",
+  "description": "A bilingual open-source platform for practical cybersecurity learning.",
+  "start_url": "/AtomicSite/",
+  "display": "standalone",
+  "background_color": "#0B0F19",
+  "theme_color": "#0B0F19",
+  "lang": "en",
+  "dir": "ltr",
+  "icons": []
+}
+

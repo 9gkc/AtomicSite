@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LabsSection } from '@/components/LabsSection';
@@ -9,6 +9,11 @@ import { Shield, Lock, Cpu, BookOpen, Terminal, ArrowRight, CheckCircle2, Github
 export default function Home() {
   const [lang, setLang] = useState<'en' | 'ar'>('en');
 
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  }, [lang]);
+
   const content = {
     en: {
       badge: 'Advanced Cybersecurity Educational Platform',
@@ -17,10 +22,10 @@ export default function Home() {
       desc: 'Explore core cybersecurity principles, cryptographic algorithms, secure banking system simulations, and interactive security labs curated by Ali Al-Karrar.',
       exploreLabs: 'Explore Security Labs',
       readReports: 'Read Research Reports',
-      statsUsers: 'Active Learners',
-      statsLabs: 'Security Labs',
-      statsReports: 'Research Papers',
-      statsUptime: 'Secure Uptime',
+      statsUsers: 'Open-source projects',
+      statsLabs: 'Security focus areas',
+      statsReports: 'Languages supported',
+      statsUptime: 'Security-first',
       aboutTitle: 'About Mr. Atomic Platform',
       aboutDesc1: 'Mr. Atomic is a specialized educational web platform designed to explore and present core cybersecurity concepts. It serves as a comprehensive repository for academic research, technical whitepapers, and interactive learning modules focused on network security, encryption, and secure system architectures.',
       aboutDesc2: 'Created and curated as an advanced cybersecurity student project by Ali Al-Karrar, the platform bridges theoretical cryptography with hands-on interactive simulations.',
@@ -38,10 +43,10 @@ export default function Home() {
       desc: 'استكشف مبادئ الأمن السيبراني الأساسية، خوارزميات التشفير، محاكاة الأنظمة المصرفية الآمنة، والمختبرات الأمنية التفاعلية بإشراف علي الكرار.',
       exploreLabs: 'استكشف المختبرات الأمنية',
       readReports: 'قراءة التقارير البحثية',
-      statsUsers: 'متعلم نشط',
-      statsLabs: 'مختبر أمني',
-      statsReports: 'ورقة بحثية',
-      statsUptime: 'استقرار آمن',
+      statsUsers: 'مشروع مفتوح المصدر',
+      statsLabs: 'مجالات أمنية',
+      statsReports: 'لغات مدعومة',
+      statsUptime: 'أمان أولًا',
       aboutTitle: 'عن منصة مستر أتوميك',
       aboutDesc1: 'مستر أتوميك هي منصة ويب تعليمية متخصصة مصممة لاستكشاف وعرض مفاهيم الأمن السيبراني الأساسية. وهي بمثابة مستودع شامل للبحث الأكاديمي والتقارير التقنية ووحدات التعلم التفاعلية.',
       aboutDesc2: 'تم إنشاء المنصة كمشروع أمني متقدم بواسطة علي الكرار، لربط التشفير النظري بالمحاكاة التفاعلية العملية.',
@@ -107,19 +112,19 @@ export default function Home() {
             {/* Stats Bar */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-16 max-w-4xl mx-auto">
               <div className="glass-card rounded-2xl p-6 text-center border border-white/10">
-                <span className="block text-3xl font-extrabold text-cyan-400 font-mono">10K+</span>
+                <span className="block text-3xl font-extrabold text-cyan-400 font-mono">14</span>
                 <span className="text-xs text-gray-400 mt-1 block">{content.statsUsers}</span>
               </div>
               <div className="glass-card rounded-2xl p-6 text-center border border-white/10">
-                <span className="block text-3xl font-extrabold text-violet-400 font-mono">15+</span>
+                <span className="block text-3xl font-extrabold text-violet-400 font-mono">3</span>
                 <span className="text-xs text-gray-400 mt-1 block">{content.statsLabs}</span>
               </div>
               <div className="glass-card rounded-2xl p-6 text-center border border-white/10">
-                <span className="block text-3xl font-extrabold text-emerald-400 font-mono">8+</span>
+                <span className="block text-3xl font-extrabold text-emerald-400 font-mono">2</span>
                 <span className="text-xs text-gray-400 mt-1 block">{content.statsReports}</span>
               </div>
               <div className="glass-card rounded-2xl p-6 text-center border border-white/10">
-                <span className="block text-3xl font-extrabold text-amber-400 font-mono">99.9%</span>
+                <span className="block text-3xl font-extrabold text-amber-400 font-mono">100%</span>
                 <span className="text-xs text-gray-400 mt-1 block">{content.statsUptime}</span>
               </div>
             </div>
