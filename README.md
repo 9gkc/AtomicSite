@@ -39,9 +39,9 @@ Mr. Atomic is a specialized educational web platform designed to explore and pre
 
 ## 🚀 Getting Started
 1. Clone the repository:
-   \`bash
-   git clone https://github.com/9gkc/mr-atomic-site.git
-   \`
+   ```bash
+   git clone https://github.com/9gkc/AtomicSite.git
+   ```
 2. Open \`atomic_educational_site.html\` to explore the platform.
 3. Navigate to \`docs/reports/\` to read the technical documentation.
 
