@@ -1,49 +1,69 @@
-# ⚛️ Mr. Atomic: Cybersecurity Educational Platform
-
-> **Live demo:** [Open AtomicSite in your browser](https://9gkc.github.io/AtomicSite/)
+# AtomicSite — Cybersecurity Educational Platform
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Category-Education-blue?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Field-Cybersecurity-red?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Language-English%20%26%20Arabic-green?style=for-the-badge" />
-  <img src="https://img.shields.io/github/last-commit/9gkc/AtomicSite?style=for-the-badge&label=Last%20Update&color=58A6FF" alt="Last Update">
-  <img src="https://img.shields.io/github/stars/9gkc/AtomicSite?style=for-the-badge&color=58A6FF" alt="GitHub Stars">
-  <img src="https://img.shields.io/github/forks/9gkc/AtomicSite?style=for-the-badge&color=58A6FF" alt="GitHub Forks">
+  <img src="https://img.shields.io/badge/Category-Education-blue?style=for-the-badge" alt="Education" />
+  <img src="https://img.shields.io/badge/Field-Cybersecurity-red?style=for-the-badge" alt="Cybersecurity" />
+  <img src="https://img.shields.io/badge/Language-English-green?style=for-the-badge" alt="English" />
 </p>
 
-Mr. Atomic is a specialized educational web platform designed to explore and present core cybersecurity concepts. It serves as a repository for academic research, technical reports, and interactive learning materials focused on network security, encryption, and system simulation.
+**AtomicSite** is an educational cybersecurity platform for exploring core concepts through structured material: network security, encryption, and secure system simulations. It includes a static educational page and a modern client/server application stack for local development.
 
-## 🛡️ Key Focus Areas
-- **Network Security:** Analysis of internet speeds and connectivity protocols.
-- **Cryptography:** Detailed reports on encoding and encryption principles.
-- **System Simulation:** Practical simulation of banking systems and secure architectures.
-- **Discrete Structures:** Academic foundations for secure computing.
+## Focus areas
 
-## 🛠️ Built With
-- **Frontend:** HTML5, CSS3 (Custom design for educational clarity)
-- **Documentation:** Comprehensive PDF reports on various security domains.
+- **Network security** — connectivity and protocol-oriented learning material
+- **Cryptography** — encoding and encryption principles
+- **System simulation** — secure architecture examples (including banking-oriented demos)
+- **Foundations** — discrete structures relevant to secure computing
 
-## 📂 Project Structure
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Static educational page | HTML / CSS |
+| Application | TypeScript, Vite, React-style client, Node server |
+| Reports | PDF materials under `docs/reports/` |
+
+## Repository layout
+
 ```text
 .
-├── docs/
-│   └── reports/      # Academic and technical cybersecurity reports (PDF)
-├── atomic_educational_site.html  # Main educational interface
-└── README.md         # Project documentation
+├── atomic_educational_site.html   # Standalone educational interface
+├── client/                        # Application frontend
+├── server/                        # Application backend
+├── shared/                        # Shared types / utilities
+├── docs/                          # Reports and documentation
+└── README.md
 ```
 
-## 📖 Included Reports (Highlights)
-- **Banking System Simulation:** A deep dive into secure financial system architectures.
-- **Encryption Principles:** Analysis of modern cryptographic methods.
-- **Security Fundamentals:** Core concepts for protecting digital assets.
+## Getting started
 
-## 🚀 Getting Started
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/9gkc/AtomicSite.git
-   ```
-2. Open \`atomic_educational_site.html\` to explore the platform.
-3. Navigate to \`docs/reports/\` to read the technical documentation.
+### Option A — static educational page
 
----
-Curated by [Ali Al-Karrar](https://github.com/9gkc) - Cybersecurity Student
+```bash
+git clone https://github.com/9gkc/AtomicSite.git
+cd AtomicSite
+# Open atomic_educational_site.html in a browser
+```
+
+### Option B — full application (local)
+
+```bash
+git clone https://github.com/9gkc/AtomicSite.git
+cd AtomicSite
+pnpm install
+pnpm dev
+```
+
+Review `package.json` for the exact scripts available on your machine.
+
+## Reports
+
+Highlighted materials live under `docs/reports/` (banking system simulation, encryption principles, security fundamentals).
+
+## Responsible use
+
+This project is **educational**. It is not a scanner, exploit toolkit, or production security product. Practice only on systems you own or are explicitly authorized to assess.
+
+## Author
+
+[Ali Al-Karrar](https://github.com/9gkc)
